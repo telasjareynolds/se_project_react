@@ -1,10 +1,10 @@
 @font-face {
-  src: url("../../assets/CabinetGrotesk-Bold.woff")format(woff);
+  src: url("../../assets/CabinetGrotesk-Bold.woff") format(woff);
   font-family: CabinetGrotesk;
 }
 
 @font-face {
-  src: url("../../assets/CabinetGrotesk-Medium.woff")format(woff);
+  src: url("../../assets/CabinetGrotesk-Medium.woff") format(woff);
   font-family: CabinetGrotesk;
 }
 
@@ -36,4 +36,25 @@
 .header__username {
   margin: 0 12px 0 20px;
   line-height: 24.8px;
+}
+
+@media screen and (max-width: 550px) {
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .header__logo {
+    margin: 0 200px 32px 0;
+  }
+
+  .header__date-location {
+    margin-left: 0;
+    margin-bottom: 16px;
+  }
+
+  .header__user-container {
+    display: none;
+  }
 }

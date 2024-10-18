@@ -7,3 +7,4 @@ export function weather() {
   })
   Promise.reject(`promise rejected`);
 }
+

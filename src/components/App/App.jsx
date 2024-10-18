@@ -4,7 +4,6 @@ import "./App.css";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
 import { weather } from "../../utils/weatherApi.js";
-import { getWeatherType } from "../../utils/constants.js";
 import Footer from "../Footer/Footer.jsx";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import ItemModal from "../ItemModal/ItemModal.jsx";
@@ -22,12 +21,7 @@ function App() {
       .then((data) => {
         setWeatherData(data);
       })
-      .then(() => {
-        getWeatherType(weatherData.main.temp);
-      })
-      .catch((err) => {
-        console.error(`There is an error: ${err}`);
-      });
+      .catch(console.error)
   }, []);
 
   const [modalActive, setModalActive] = useState("");
@@ -48,7 +42,7 @@ function App() {
       <div className="page__content">
         <Header
           weatherData={weatherData}
-          handleModalOpen={openAddGarmentModal}
+          openAddGarmentModal={openAddGarmentModal}
         />
         <Main
           weatherData={weatherData}
