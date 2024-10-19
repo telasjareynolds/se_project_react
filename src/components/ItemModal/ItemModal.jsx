@@ -1,15 +1,19 @@
 import "./ItemModal.css";
 
-function ItemModal({ modalActive, card, handleModalClose,name }) {
+function ItemModal({ isOpen, card, handleModalClose, name }) {
   function handleOverlayClick(e) {
     if (e.target.classList.contains("modal_opened")) {
       handleModalClose();
     }
   }
   return (
-    <div className={`modal ${modalActive === "preview" ? "modal_opened" : "" }`} onClick={handleOverlayClick} name={name}>
+    <div
+      className={`modal ${isOpen ? "modal_opened" : ""}`}
+      onClick={handleOverlayClick}
+      name={name}
+    >
       <div className="modal__content modal__content_type_preview">
-      <button
+        <button
           onClick={handleModalClose}
           type="button"
           className="modal__close-btn"

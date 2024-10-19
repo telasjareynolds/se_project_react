@@ -21,7 +21,7 @@ function App() {
       .then((data) => {
         setWeatherData(data);
       })
-      .catch(console.error)
+      .catch(console.error);
   }, []);
 
   const [modalActive, setModalActive] = useState("");
@@ -51,6 +51,7 @@ function App() {
         <Footer />
       </div>
       <ModalWithForm
+        isOpen={modalActive === "add-garment"}
         buttonText="Add garment"
         title="New garment"
         name="clothes"
@@ -79,28 +80,43 @@ function App() {
         <fieldset className="modal__radio-btns">
           <legend className="modal__legend">Select the weather type:</legend>
           <label htmlFor="hot" className="modal__label modal__label_type_radio">
-            <input id="hot" className="modal__radio-input" type="radio" />
+            <input
+              id="hot"
+              className="modal__radio-input"
+              type="radio"
+              name="radio"
+            />
             Hot
           </label>
           <label
             htmlFor="warm"
             className="modal__label modal__label_type_radio"
           >
-            <input id="warm" className="modal__radio-input" type="radio" />
+            <input
+              id="warm"
+              className="modal__radio-input"
+              type="radio"
+              name="radio"
+            />
             Warm
           </label>
           <label
             htmlFor="cold"
             className="modal__label modal__label_type_radio"
           >
-            <input id="cold" className="modal__radio-input" type="radio" />
+            <input
+              id="cold"
+              className="modal__radio-input"
+              type="radio"
+              name="radio"
+            />
             Cold
           </label>
         </fieldset>
       </ModalWithForm>
       <ItemModal
         name="preview"
-        modalActive={modalActive}
+        isOpen={modalActive === "preview"}
         handleModalClose={closeActivemodal}
         card={selectedCard}
       />

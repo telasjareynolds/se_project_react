@@ -5,7 +5,7 @@ function ModalWithForm({
   name,
   buttonText,
   title,
-  modalActive,
+  isOpen,
   handleModalClose,
 }) {
   function handleOverlayClick(e) {
@@ -16,7 +16,7 @@ function ModalWithForm({
 
   return (
     <div
-      className={`modal ${modalActive === "add-garment" ? "modal_opened" : ""}`}
+      className={`modal ${isOpen ? "modal_opened" : ""}`}
       onClick={handleOverlayClick}
     >
       <div className="modal__content">
@@ -25,7 +25,7 @@ function ModalWithForm({
           onClick={handleModalClose}
           type="button"
           className="modal__close-btn"
-        ></button>
+        />
         <form className={`modal__form modal_type_${name}`} name={name}>
           {children}
           <button type="submit" className="modal__submit-btn">
