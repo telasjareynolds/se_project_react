@@ -25,6 +25,6 @@
   .weather-card__img {
     width: 100%;
     margin-right: 16px;
-    width: 343px;
+    max-width: 343px;
   }
 }

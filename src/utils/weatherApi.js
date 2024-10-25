@@ -1,4 +1,4 @@
-import { defaultClothingItems, apiKey, location } from "./constants";
+import { defaultClothingItems, apiKey, location, getWeatherType } from "./constants";
 
 export function weather() {
   return fetch(
@@ -10,3 +10,12 @@ export function weather() {
     Promise.reject(`Error ${res.status}`);
   });
 }
+
+export function filterWeatherData (data) {
+  const weather = {};
+    weather.city = data.name;
+    weather.main = { F: data.main.temp };
+    weather.type = getWeatherType(weather.main.F);
+  return weather;
+}
+

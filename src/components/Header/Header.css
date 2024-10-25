@@ -30,12 +30,16 @@
 }
 
 .header__date-location {
-  margin: 0 auto 0 24px;
+  margin: 0 auto 0 0;
 }
 
 .header__username {
   margin: 0 12px 0 20px;
   line-height: 24.8px;
+}
+
+.header__menu-icon {
+  visibility: hidden;
 }
 
 @media screen and (max-width: 550px) {
@@ -46,7 +50,7 @@
   }
 
   .header__logo {
-    margin: 0 200px 32px 0;
+    margin: 0 0 32px 0;
   }
 
   .header__date-location {
@@ -56,5 +60,23 @@
 
   .header__user-container {
     display: none;
+  }
+
+  .header__mobile-view {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .header__menu-icon {
+    visibility: visible;
+    background: transparent
+      url(/se_project_react/src/assets/mobile-menu-btn.svg) no-repeat;
+    border: none;
+    width: 54px;
+    height: 54px;
+    overflow: auto;
   }
 }

@@ -3,23 +3,26 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
-import { weather } from "../../utils/weatherApi.js";
+import { filterWeatherData, weather } from "../../utils/weatherApi.js";
 import Footer from "../Footer/Footer.jsx";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import ItemModal from "../ItemModal/ItemModal.jsx";
+import MobileMenu from "../MobileMenu/MobileMenu.jsx";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
     type: "",
-    main: { temp: "" },
-    name: "",
+    main: { F: "" },
+    city: "",
   });
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   //getWeatherType(weatherData.main.temp)
   useEffect(() => {
     weather()
       .then((data) => {
-        setWeatherData(data);
+        setWeatherData(filterWeatherData(data));
       })
       .catch(console.error);
   }, []);
@@ -37,12 +40,18 @@ function App() {
     setModalActive("");
   };
 
+  const toggleMobileMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+    console.log(isMenuOpen);
+  };
+
   return (
     <div className="page">
       <div className="page__content">
         <Header
           weatherData={weatherData}
           openAddGarmentModal={openAddGarmentModal}
+          toggleMobileMenu={toggleMobileMenu}
         />
         <Main
           weatherData={weatherData}
@@ -119,6 +128,11 @@ function App() {
         isOpen={modalActive === "preview"}
         handleModalClose={closeActivemodal}
         card={selectedCard}
+      />
+      <MobileMenu
+        isMenuOpen={isMenuOpen}
+        closeMobileMenu={toggleMobileMenu}
+        openAddGarmentModal={openAddGarmentModal}
       />
     </div>
   );

@@ -43,11 +43,12 @@
 
 @media screen and (max-width: 550px) {
   .page {
-    padding: 20px 16px;
+  padding: 20px 16px;
   }
 
   .page__content {
     width: 343px;
-    width: 100%;
+    width: 100%;  
+    
   }
 }

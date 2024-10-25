@@ -3,12 +3,19 @@ import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.png";
 import { currentDate } from "../../utils/constants.js";
 
-function Header({ weatherData, openAddGarmentModal }) {
+function Header({ weatherData, openAddGarmentModal, toggleMobileMenu }) {
   return (
     <header className="header">
-      <img src={logo} alt="website logo" className="header__logo" />
+      <div className="header__mobile-view">
+        <img src={logo} alt="website logo" className="header__logo" />
+        <button
+          className="header__menu-icon"
+          type="button"
+          onClick={toggleMobileMenu}
+        />
+      </div>
       <p className="header__date-location">
-        {currentDate}, {weatherData.name}
+        {currentDate}, {weatherData.city}
       </p>
       <div className="header__user-container">
         <button
