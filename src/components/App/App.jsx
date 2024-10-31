@@ -10,7 +10,7 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
-import { getItems } from "../../utils/api.js";
+import { getItems, addItem } from "../../utils/api.js";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 
 function App() {
@@ -66,8 +66,14 @@ function App() {
       : setCurrentTemperatureUnit("F");
   };
 
-  function onAddItem(e) {
-    e.preventDefault();
+  function handleAddItem(item) {
+    addItem(item)
+      .then((newItem) => {
+        setClothingItems([newItem, ...clothingItems]);
+      })
+      .catch((error) => {
+        console.error("Error adding item:", error);
+      });
   }
 
   //open confirm delete item modal
@@ -97,15 +103,18 @@ function App() {
                 <Main
                   weatherData={weatherData}
                   openPreviewImageModal={openPreviewImageModal}
-                  clothingItems={clothingItems} 
+                  clothingItems={clothingItems}
                 />
               }
             />
             <Route
               path="/profile"
               element={
-                <Profile openPreviewImageModal={openPreviewImageModal} openAddGarmentModal={openAddGarmentModal}
-                clothingItems={clothingItems}/>
+                <Profile
+                  openPreviewImageModal={openPreviewImageModal}
+                  openAddGarmentModal={openAddGarmentModal}
+                  clothingItems={clothingItems}
+                />
               }
             />
           </Routes>
@@ -116,7 +125,7 @@ function App() {
           isOpen={modalActive === "add-garment"}
           modalActive={modalActive}
           handleModalClose={closeActivemodal}
-          onAddItem={onAddItem}
+          onAddItem={handleAddItem}
         />
         <ItemModal
           name="preview"
@@ -125,11 +134,12 @@ function App() {
           card={selectedCard}
           openConfirmDeleteModal={openConfirmDeleteModal}
         />
-        <ConfirmDeleteModal 
-         name="delete"
-         isOpen={modalActive === "delete"}
-         handleModalClose={closeActivemodal}
-         card={selectedCard}/>
+        <ConfirmDeleteModal
+          name="delete"
+          isOpen={modalActive === "delete"}
+          handleModalClose={closeActivemodal}
+          card={selectedCard}
+        />
         <MobileMenu
           isMenuOpen={isMenuOpen}
           closeMobileMenu={toggleMobileMenu}

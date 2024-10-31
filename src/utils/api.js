@@ -10,3 +10,17 @@ export function getItems() {
   return fetch(`${baseUrl}/items`).then(checkResponse);
 }
 
+export function addItem() {
+  return fetch(`${baseUrl}/items`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+    name: "",
+    imageUrl: "",
+    weather: ""
+  })
+})
+  .then(checkResponse)
+}

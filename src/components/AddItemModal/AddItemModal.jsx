@@ -1,31 +1,31 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import React from "react";
 import { useState, useEffect } from "react";
+import App from "../App/App";
 
 function AddItemModal({ handleModalClose, onAddItem, isOpen }) {
   const [name, setName] = React.useState("");
-  const [imgLink, setImgLink] = React.useState("");
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [tempType, setTempType] = React.useState("");
 
   function handleNameChange(e) {
     setName(e.target.value);
   }
 
   function handleImgChange(e) {
-    setImgLink(e.target.value);
+    setImageUrl(e.target.value);
+  }
+
+  function handleTempTypeChange(e) {
+    setTempType(e.target.value);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ name, imgLink });
-    onAddItem({ name, imgLink });
+    console.log({ name, imageUrl });
+    onAddItem({ name, imageUrl, tempType });
+    handleModalClose();
   };
-
-  React.useEffect(() => {
-    function handleFieldReset() {
-      setName("");
-      setImgLink("");
-    }
-  });
 
   return (
     <ModalWithForm
@@ -56,7 +56,7 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen }) {
           type="text"
           placeholder="Image URL"
           onChange={handleImgChange}
-          value={imgLink}
+          value={imageUrl}
         />
       </label>
       <fieldset className="modal__radio-btns">
@@ -68,7 +68,8 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen }) {
             type="radio"
             name="radio"
             value="hot"
-            
+            checked={tempType === "hot"}
+            onChange={handleTempTypeChange}
           />
           Hot
         </label>
@@ -79,7 +80,8 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen }) {
             type="radio"
             name="radio"
             value="warm"
-            
+            checked={tempType === "warm"}
+            onChange={handleTempTypeChange}
           />
           Warm
         </label>
@@ -88,9 +90,9 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen }) {
             id="cold"
             className="modal__radio-input"
             type="radio"
-            name="radio"
             value="cold"
-           
+            checked={tempType === "cold"}
+            onChange={handleTempTypeChange}
           />
           Cold
         </label>
