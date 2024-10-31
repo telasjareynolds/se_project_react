@@ -1,17 +1,22 @@
 import "./Profile.css";
 import SideBar from "../SideBar/SideBar";
-import ClothesSections from "../ClothesSections/ClothesSections";
+import ClothesSection from "../ClothesSection/ClothesSection";
 
-function Profile({ openPreviewImageModal, openAddGarmentModal, clothingItems }) {
+function Profile({
+  openPreviewImageModal,
+  openAddGarmentModal,
+  clothingItems,
+}) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
         <SideBar />
       </section>
       <section className="profile__clothes-section">
-        <ClothesSections
+        <ClothesSection
           openPreviewImageModal={openPreviewImageModal}
-          openAddGarmentModal={openAddGarmentModal} clothingItems={clothingItems}
+          openAddGarmentModal={openAddGarmentModal}
+          clothingItems={clothingItems}
         />
       </section>
     </div>

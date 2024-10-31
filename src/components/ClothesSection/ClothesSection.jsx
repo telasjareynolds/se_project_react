@@ -1,8 +1,7 @@
-import "./ClothesSections.css";
-import { defaultClothingItems } from "../../utils/constants.js";
-import ItemCard from "../ItemCard/ItemCard";
+import "./ClothesSection.css";
+import ItemCard from "../ItemCard/ItemCard.jsx";
 
-function ClothesSections({
+function ClothesSection({
   openPreviewImageModal,
   openAddGarmentModal,
   clothingItems,
@@ -34,4 +33,4 @@ function ClothesSections({
   );
 }
 
-export default ClothesSections;
+export default ClothesSection;
