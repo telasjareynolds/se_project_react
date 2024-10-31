@@ -1,0 +1,54 @@
+.toggle {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.toggle__box {
+  border-radius: 20px;
+  border: 2px solid black;
+  width: 56px;
+  height: 28px;
+  appearance: none;
+}
+
+.toggle__temp {
+  position: absolute;
+  background-color: black;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  top: -1px;
+}
+
+.toggle__temp-f {
+  left: 1px;
+}
+
+.toggle__temp-c {
+  left: 25px;
+  
+}
+
+.toggle__f {
+  color: #00000080;
+  position: absolute;
+  font-size: 14px;
+  top: -11px;
+  left: 12px;
+}
+
+.toggle__c {
+  color: #00000080;
+  position: absolute;
+  font-size: 14px;
+  top: -11px;
+  left: 35px;
+}
+
+.toggle__active {
+  color: white;
+}

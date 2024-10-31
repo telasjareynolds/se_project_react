@@ -45,12 +45,15 @@ export const location = {
 
 export function getWeatherType(temp) {
   if (temp >= 86) {
-    return 'hot';
+    return "hot";
   } else if (temp >= 66) {
-    return 'warm';
+    return "warm";
   } else {
-    return 'cold';
+    return "cold";
   }
 }
 
-export const currentDate = new Date().toLocaleString('default', { month: 'long', day: 'numeric' });
+export const currentDate = new Date().toLocaleString("default", {
+  month: "long",
+  day: "numeric",
+});

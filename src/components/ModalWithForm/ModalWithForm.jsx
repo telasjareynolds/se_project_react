@@ -7,6 +7,7 @@ function ModalWithForm({
   title,
   isOpen,
   handleModalClose,
+  onSubmit,
 }) {
   function handleOverlayClick(e) {
     if (e.target.classList.contains("modal_opened")) {
@@ -26,7 +27,11 @@ function ModalWithForm({
           type="button"
           className="modal__close-btn"
         />
-        <form className={`modal__form modal_type_${name}`} name={name}>
+        <form
+          className={`modal__form modal_type_${name}`}
+          name={name}
+          onSubmit={onSubmit}
+        >
           {children}
           <button type="submit" className="modal__submit-btn">
             {buttonText}
