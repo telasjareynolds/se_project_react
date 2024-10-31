@@ -23,3 +23,9 @@ export function addItem({ name, imageUrl, weather }) {
     }),
   }).then(checkResponse);
 }
+
+export function deleteItem(id) {
+  return fetch(`${baseUrl}/items/${id}`, {
+    method: "DELETE",
+  }).then(checkResponse);
+}

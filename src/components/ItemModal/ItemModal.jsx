@@ -1,6 +1,12 @@
 import "./ItemModal.css";
 
-function ItemModal({ isOpen, card, handleModalClose, name, openConfirmDeleteModal}) {
+function ItemModal({
+  isOpen,
+  card,
+  handleModalClose,
+  name,
+  openConfirmDeleteModal,
+}) {
   function handleOverlayClick(e) {
     if (e.target.classList.contains("modal_opened")) {
       handleModalClose();
@@ -28,7 +34,11 @@ function ItemModal({ isOpen, card, handleModalClose, name, openConfirmDeleteModa
             <h2 className="modal__caption">{card.name}</h2>
             <p className="modal__weather">Weather: {card.weather}</p>
           </div>
-          <button type="button" className="modal__delete-btn" onClick={openConfirmDeleteModal}>
+          <button
+            type="button"
+            className="modal__delete-btn"
+            onClick={openConfirmDeleteModal}
+          >
             Delete item
           </button>
         </div>

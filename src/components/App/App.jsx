@@ -10,7 +10,7 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
-import { getItems, addItem } from "../../utils/api.js";
+import { getItems, addItem, deleteItem } from "../../utils/api.js";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 
 function App() {
@@ -24,7 +24,6 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [addClothing, setAddClothing] = useState([]);
 
   //get filtered cards based on weather
   useEffect(() => {
@@ -55,25 +54,22 @@ function App() {
   const closeActivemodal = () => {
     setModalActive("");
   };
-// mobile menu opening
+  // mobile menu opening
   const toggleMobileMenu = () => {
     isMenuOpen === false ? setIsMenuOpen(true) : setIsMenuOpen(false);
   };
 
-//switch tempature units
+  //switch tempature units
   const handleToggleSwitchChange = () => {
     currentTemperatureUnit === "F"
       ? setCurrentTemperatureUnit("C")
       : setCurrentTemperatureUnit("F");
   };
-// add clothing items
+  // add clothing items
   function onAddItem(name, imageUrl, weather) {
-    addItem({name, imageUrl, weather})
+    addItem({ name, imageUrl, weather })
       .then((data) => {
-        setClothingItems((clothingItems) => [
-          ...clothingItems, 
-          data,
-        ]);
+        setClothingItems((clothingItems) => [...clothingItems, data]);
         closeActivemodal();
       })
       .catch((error) => {
@@ -87,9 +83,21 @@ function App() {
     setModalActive("delete");
   };
 
-  function onDeleteItem(e) {
-    e.preventDefault();
+  function onDeleteItem(id) {
+    console.log("Deleting item with ID:", id);
+    deleteItem(id)
+      .then(() => {
+        const updatedClothingItems = clothingItems.filter(
+          (item) => item._id !== id
+        );
+        setClothingItems(updatedClothingItems);
+        closeActivemodal();
+      })
+      .catch((error) => {
+        console.error("Error deleting item:", error);
+      });
   }
+
   return (
     <div className="page">
       <CurrentTemperatureUnitContext.Provider
@@ -143,6 +151,7 @@ function App() {
           isOpen={modalActive === "delete"}
           handleModalClose={closeActivemodal}
           card={selectedCard}
+          onDeleteItem={onDeleteItem}
         />
         <MobileMenu
           isMenuOpen={isMenuOpen}

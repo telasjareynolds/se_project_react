@@ -1,10 +1,19 @@
 import "./ConfirmDeleteModal.css";
 
-function ConfirmDeleteModal({ isOpen, card, handleModalClose, name }) {
+function ConfirmDeleteModal({
+  isOpen,
+  onDeleteItem,
+  card,
+  handleModalClose,
+  name,
+}) {
   function handleOverlayClick(e) {
     if (e.target.classList.contains("modal_opened")) {
       handleModalClose();
     }
+  }
+  function handleDelete() {
+    onDeleteItem(card._id);
   }
   return (
     <div
@@ -20,8 +29,14 @@ function ConfirmDeleteModal({ isOpen, card, handleModalClose, name }) {
         ></button>
         <div className="modal__container">
           <p className="modal__question">
-            Are you sure you want to delete this item? <br/> This action is irreversible.</p>
-          <button type="button" className="modal__delete-btn">
+            Are you sure you want to delete this item? <br /> This action is
+            irreversible.
+          </p>
+          <button
+            type="button"
+            className="modal__delete-btn"
+            onClick={handleDelete}
+          >
             Yes, delete item
           </button>
           <button
