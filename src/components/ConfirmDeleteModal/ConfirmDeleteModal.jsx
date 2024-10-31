@@ -6,6 +6,7 @@ function ConfirmDeleteModal({
   card,
   handleModalClose,
   name,
+  buttonText,
 }) {
   function handleOverlayClick(e) {
     if (e.target.classList.contains("modal_opened")) {
@@ -37,7 +38,7 @@ function ConfirmDeleteModal({
             className="modal__delete-btn"
             onClick={handleDelete}
           >
-            Yes, delete item
+            {buttonText}
           </button>
           <button
             type="button"

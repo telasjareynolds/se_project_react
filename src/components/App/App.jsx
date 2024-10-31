@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
@@ -24,6 +25,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   //get filtered cards based on weather
   useEffect(() => {
@@ -42,6 +44,23 @@ function App() {
       })
       .catch(console.error);
   }, []);
+
+  //Stop ESC listener if there are no active modals
+  useEffect(() => {
+    if (!modalActive) return;
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActivemodal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [modalActive]);
 
   //Open and close modals
   const openAddGarmentModal = () => {
@@ -67,14 +86,16 @@ function App() {
   };
   // add clothing items
   function onAddItem(name, imageUrl, weather) {
+    setIsLoading(true);
     addItem({ name, imageUrl, weather })
       .then((data) => {
-        setClothingItems((clothingItems) => [...clothingItems, data]);
+        setClothingItems((clothingItems) => [data, ...clothingItems]);
         closeActivemodal();
       })
       .catch((error) => {
         console.error("Error adding item:", error);
-      });
+      })
+      .finally(setIsLoading(false));
   }
 
   //open confirm delete item modal
@@ -138,6 +159,7 @@ function App() {
           isOpen={modalActive === "add-garment"}
           handleModalClose={closeActivemodal}
           onAddItem={onAddItem}
+          buttonText={isLoading ? "Saving..." : "Add garment"}
         />
         <ItemModal
           name="preview"
@@ -152,6 +174,7 @@ function App() {
           handleModalClose={closeActivemodal}
           card={selectedCard}
           onDeleteItem={onDeleteItem}
+          buttonText={isLoading ? "Saving..." : "Yes, delete item"}
         />
         <MobileMenu
           isMenuOpen={isMenuOpen}

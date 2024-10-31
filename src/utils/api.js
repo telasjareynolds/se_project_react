@@ -1,17 +1,22 @@
 const baseUrl = "http://localhost:3001";
-function checkResponse(res) {
+
+export function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Error: ${res.status}`);
 }
 
+function request(url, options) {
+  return fetch(url, options).then(checkResponse);
+}
+
 export function getItems() {
-  return fetch(`${baseUrl}/items`).then(checkResponse);
+  return request(`${baseUrl}/items`);
 }
 
 export function addItem({ name, imageUrl, weather }) {
-  return fetch(`${baseUrl}/items`, {
+  return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,11 +26,11 @@ export function addItem({ name, imageUrl, weather }) {
       imageUrl,
       weather,
     }),
-  }).then(checkResponse);
+  });
 }
 
 export function deleteItem(id) {
-  return fetch(`${baseUrl}/items/${id}`, {
+  return request(`${baseUrl}/items/${id}`, {
     method: "DELETE",
-  }).then(checkResponse);
+  });
 }

@@ -30,7 +30,6 @@
 
 .toggle__temp-c {
   left: 25px;
-  
 }
 
 .toggle__f {
@@ -51,4 +50,10 @@
 
 .toggle__active {
   color: white;
+}
+
+@media screen and (max-width: 550px) {
+  .toggle {
+    display: none;
+  }
 }

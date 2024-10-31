@@ -9,11 +9,14 @@ function ModalWithForm({
   handleModalClose,
   onSubmit,
 }) {
+
+
   function handleOverlayClick(e) {
     if (e.target.classList.contains("modal_opened")) {
       handleModalClose();
     }
   }
+
 
   return (
     <div

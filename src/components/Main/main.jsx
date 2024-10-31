@@ -16,7 +16,7 @@ function Main({ weatherData, openPreviewImageModal, clothingItems }) {
       <section className="cards">
         <p className="cards__heading">
           Today is {weatherData.main[currentTemperatureUnit]}&deg;
-          {currentTemperatureUnit === "F" ? "F" : "C"} / You may want to wear:
+          {currentTemperatureUnit} / You may want to wear:
         </p>
         <ul className="cards__list">
           {clothingItems
