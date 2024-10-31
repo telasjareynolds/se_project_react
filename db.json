@@ -49,6 +49,12 @@
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Jeans.png?etag=58345e8bef1ce5f95ac882e71d309e6c"
     },
     {
+      "_id": 8,
+      "name": "Loafers",
+      "weather": "warm",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Loafers.png?etag=dc2d6e1ca7b297597406e35c40aef030"
+    },
+    {
       "_id": 9,
       "name": "Sandals",
       "weather": "hot",
@@ -73,6 +79,12 @@
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Skirt.png?etag=27a6bea7e1b63218820d615876fa31d1"
     },
     {
+      "_id": 13,
+      "name": "Sneakers",
+      "weather": "warm",
+      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sneakers.png?etag=3efeec41c1c78b8afe26859ca7fa7b6f"
+    },
+    {
       "_id": 14,
       "name": "Sunglasses",
       "weather": "hot",
@@ -89,64 +101,6 @@
       "name": "T-Shirt",
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
-    },
-    {
-      "name": "",
-      "imageUrl": "",
-      "weather": "",
-      "_id": 17
-    },
-    {
-      "name": "",
-      "imageUrl": "",
-      "weather": "",
-      "_id": 18
-    },
-    {
-      "name": "",
-      "imageUrl": "",
-      "weather": "",
-      "_id": 19
-    },
-    {
-      "name": "",
-      "imageUrl": "",
-      "weather": "",
-      "_id": 20
-    },
-    {
-      "name": "",
-      "imageUrl": "",
-      "weather": "",
-      "_id": 21
-    },
-    {
-      "name": "",
-      "imageUrl": "",
-      "weather": "",
-      "_id": 22
-    },
-    {
-      "name": "",
-      "imageUrl": "",
-      "weather": "",
-      "_id": 23
-    },
-    {
-      "name": {
-        "name": "Te",
-        "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sneakers.png?etag=3efeec41c1c78b8afe26859ca7fa7b6f",
-        "weather": "warm"
-      },
-      "_id": 24
-    },
-    {
-      "name": {
-        "name": "Hi",
-        "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sneakers.png?etag=3efeec41c1c78b8afe26859ca7fa7b6f",
-        "weather": "warm"
-      },
-      "_id": 25
     }
   ]
 }

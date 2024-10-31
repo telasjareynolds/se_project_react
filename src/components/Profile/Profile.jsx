@@ -10,6 +10,7 @@ function Profile({
   return (
     <div className="profile">
       <section className="profile__sidebar">
+        {console.log(clothingItems)}
         <SideBar />
       </section>
       <section className="profile__clothes-section">
