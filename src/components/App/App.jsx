@@ -19,6 +19,12 @@ function App() {
     main: { F: "" },
     city: "",
   });
+  const [clothingItems, setClothingItems] = useState([]);
+  const [modalActive, setModalActive] = useState("");
+  const [selectedCard, setSelectedCard] = useState({});
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [addClothing, setAddClothing] = useState([]);
 
   //get filtered cards based on weather
   useEffect(() => {
@@ -29,7 +35,6 @@ function App() {
       .catch(console.error);
   }, []);
 
-  const [clothingItems, setClothingItems] = useState([]);
   //get cards from api
   useEffect(() => {
     getItems()
@@ -39,8 +44,7 @@ function App() {
       .catch(console.error);
   }, []);
 
-  const [modalActive, setModalActive] = useState("");
-  const [selectedCard, setSelectedCard] = useState({});
+  //Open and close modals
   const openAddGarmentModal = () => {
     setModalActive("add-garment");
   };
@@ -51,25 +55,26 @@ function App() {
   const closeActivemodal = () => {
     setModalActive("");
   };
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+// mobile menu opening
   const toggleMobileMenu = () => {
     isMenuOpen === false ? setIsMenuOpen(true) : setIsMenuOpen(false);
   };
 
-  const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-
+//switch tempature units
   const handleToggleSwitchChange = () => {
     currentTemperatureUnit === "F"
       ? setCurrentTemperatureUnit("C")
       : setCurrentTemperatureUnit("F");
   };
-
-  function handleAddItem(item) {
-    addItem(item)
-      .then((newItem) => {
-        setClothingItems([newItem, ...clothingItems]);
+// add clothing items
+  function onAddItem(name, imageUrl, weather) {
+    addItem({name, imageUrl, weather})
+      .then((data) => {
+        setClothingItems((clothingItems) => [
+          ...clothingItems, 
+          data,
+        ]);
+        closeActivemodal();
       })
       .catch((error) => {
         console.error("Error adding item:", error);
@@ -123,9 +128,8 @@ function App() {
         </div>
         <AddItemModal
           isOpen={modalActive === "add-garment"}
-          modalActive={modalActive}
           handleModalClose={closeActivemodal}
-          onAddItem={handleAddItem}
+          onAddItem={onAddItem}
         />
         <ItemModal
           name="preview"
