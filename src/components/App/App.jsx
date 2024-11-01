@@ -95,7 +95,7 @@ function App() {
       .catch((error) => {
         console.error("Error adding item:", error);
       })
-      .finally(setIsLoading(false));
+      .finally(() => setIsLoading(false));
   }
 
   //open confirm delete item modal
