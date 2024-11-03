@@ -1,37 +1,23 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import "./AddItemModal.css";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
-  const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [weather, setWeather] = useState("");
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleImgChange(e) {
-    setImageUrl(e.target.value);
-  }
-
-  function handleWeatherChange(e) {
-    setWeather(e.target.value);
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ name, imageUrl });
-    onAddItem(name, imageUrl, weather);
-  };
+  // how to use the hook
+  const { values, handleChange, resetForm, errors } = useFormWithValidation();
 
   useEffect(() => {
     if (isOpen) {
-      setName("");
-      setImageUrl("");
-      setWeather("");
+      resetForm();
     }
-  }, [isOpen]);
+  }, [isOpen, resetForm]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onAddItem(values.name, values.imageUrl, values.weather);
+  };
 
   return (
     <ModalWithForm
@@ -45,25 +31,32 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
       <label htmlFor="name" className="modal__label">
         Name{" "}
         <input
+          name="name"
           className="modal__input"
           id="name"
           type="text"
           placeholder="Name"
-          onChange={handleNameChange}
-          value={name}
+          onChange={handleChange}
+          value={values.name}
+          minLength={2}
         />
+        {errors.name && <span className="modal__error">{errors.name}</span>}
       </label>
       <label htmlFor="imageUrl" className="modal__label">
         {" "}
         Image
         <input
           className="modal__input"
+          name="imageUrl"
           id="imageUrl"
-          type="text"
+          type="url"
           placeholder="Image URL"
-          onChange={handleImgChange}
-          value={imageUrl}
+          onChange={handleChange}
+          value={values.imageUrl}
         />
+        {errors.imageUrl && (
+          <span className="modal__error">{errors.imageUrl}</span>
+        )}
       </label>
       <fieldset className="modal__radio-btns">
         <legend className="modal__legend">Select the weather type:</legend>
@@ -72,10 +65,10 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
             id="hot"
             className="modal__radio-input"
             type="radio"
-            name="radio"
+            name="weather"
             value="hot"
-            checked={weather === "hot"}
-            onChange={handleWeatherChange}
+            checked={values.weather === "hot"}
+            onChange={handleChange}
           />
           Hot
         </label>
@@ -84,10 +77,10 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
             id="warm"
             className="modal__radio-input"
             type="radio"
-            name="radio"
+            name="weather"
             value="warm"
-            checked={weather === "warm"}
-            onChange={handleWeatherChange}
+            checked={values.weather === "warm"}
+            onChange={handleChange}
           />
           Warm
         </label>
@@ -96,12 +89,16 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
             id="cold"
             className="modal__radio-input"
             type="radio"
+            name="weather"
             value="cold"
-            checked={weather === "cold"}
-            onChange={handleWeatherChange}
+            checked={values.weather === "cold"}
+            onChange={handleChange}
           />
           Cold
         </label>
+        {errors.weather && (
+          <span className="modal__error">{errors.weather}</span>
+        )}
       </fieldset>
     </ModalWithForm>
   );

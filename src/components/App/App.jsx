@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import React from "react";
 import "./App.css";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
@@ -25,7 +24,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   //get filtered cards based on weather
   useEffect(() => {

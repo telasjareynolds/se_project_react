@@ -81,7 +81,7 @@
   .header__menu-icon {
     visibility: visible;
     background: transparent
-      url(/se_project_react/src/assets/mobile-menu-btn.svg) no-repeat;
+      url(../../assets/mobile-menu-btn.svg) no-repeat;
       color: black;
     border: none;
     width: 54px;
