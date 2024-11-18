@@ -14,6 +14,8 @@ React (v18.2)
 CSS Modules
 JavaScript (ES6)
 
+Link to back-end repo: https://github.com/telasjareynolds/se_project_express
+
 ⚙️ Setup
 Clone: git clone: https://github.com/telasjareynolds/se_project_react/
 Install dependencies: npm install

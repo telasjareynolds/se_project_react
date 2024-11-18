@@ -10,6 +10,8 @@ function Main({ weatherData, openPreviewImageModal, clothingItems }) {
     CurrentTemperatureUnitContext
   );
 
+  console.log(clothingItems);
+
   return (
     <main>
       <WeatherCard weatherData={weatherData} />
