@@ -7,11 +7,16 @@ import Footer from "../Footer/Footer.jsx";
 import ItemModal from "../ItemModal/ItemModal.jsx";
 import MobileMenu from "../MobileMenu/MobileMenu.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import { getItems, addItem, deleteItem } from "../../utils/api.js";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
+import ProtectedRoute from "../ProtectedRoute.jsx";
+import { register, login, checkToken } from "../../utils/auth.js";
+import RegisterModal from "../RegisterModal/RegisterModal.jsx";
+import LoginModal from "../LoginModal/LoginModal.jsx";
+import { getToken, setToken, removeToken } from "../../utils/token.js";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -25,6 +30,27 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({ username: "", email: "" });
+
+
+  //check is there's a token in localStorage
+useEffect(() => {
+  const jwt = getToken();
+  if (!jwt) {
+    return
+  }
+  checkToken(jwt)
+  .then((data) => {
+    console.log("Token is valid:", data);
+    setIsLoggedIn(true);
+    setUserData(data);
+  })
+  .catch((error) => {
+    console.error("Invalid token:", error);
+    removeToken();
+  })
+}, []);
 
   //get filtered cards based on weather
   useEffect(() => {
@@ -60,6 +86,44 @@ function App() {
       document.removeEventListener("keydown", handleEscClose);
     };
   }, [modalActive]);
+
+  //Configure user registration
+  const handleRegistration = ({ name, avatar, email, password }) => {
+    register(name, avatar, email, password)
+      .then(() => {
+        setIsLoggedIn(true);
+        closeActivemodal();
+      })
+      .catch((error) => {
+        console.error("Error registering user:", error);
+      });
+  };
+
+  // Configure user authorization
+  const handleLogin = ({ email, password }) => {
+    if (!email || !password) {
+      return;
+    }
+    login(email, password)
+      .then((data) => {
+        if (data.jwt) {
+          console.log(data);
+          setIsLoggedIn(true);
+
+          //store token in storage
+          setToken(data.jwt);
+
+          //Update application state
+          setUserData(data.user);
+          closeActivemodal();
+        } else {
+          console.error("No JWT token found in the response.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error logging user in:", error);
+      });
+  };
 
   //Open and close modals
   const openAddGarmentModal = () => {
@@ -143,17 +207,32 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile
-                  openPreviewImageModal={openPreviewImageModal}
-                  openAddGarmentModal={openAddGarmentModal}
-                  clothingItems={clothingItems}
-                />
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    openPreviewImageModal={openPreviewImageModal}
+                    openAddGarmentModal={openAddGarmentModal}
+                    clothingItems={clothingItems}
+                    userData={userData}
+                  />
+                </ProtectedRoute>
               }
             />
           </Routes>
 
           <Footer />
         </div>
+        <RegisterModal
+          isOpen={modalActive === "register"}
+          handleModalClose={closeActivemodal}
+          handleRegistration={handleRegistration}
+          buttonText={isLoading ? "Saving..." : "Sign Up"}
+        />
+        <LoginModal
+          isOpen={modalActive === "login"}
+          handleModalClose={closeActivemodal}
+          handleLogin={handleLogin}
+          buttonText={isLoading ? "Saving..." : "Log In"}
+        />
         <AddItemModal
           isOpen={modalActive === "add-garment"}
           handleModalClose={closeActivemodal}

@@ -6,12 +6,13 @@ function Profile({
   openPreviewImageModal,
   openAddGarmentModal,
   clothingItems,
+  userData
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
         {console.log(clothingItems)}
-        <SideBar />
+        <SideBar userData={userData}/>
       </section>
       <section className="profile__clothes-section">
         <ClothesSection

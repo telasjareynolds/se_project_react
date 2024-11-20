@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
-function LoginModal({ handleModalClose, onLogin, isOpen, buttonText }) {
+function LoginModal({ handleModalClose, handleLogin, isOpen, buttonText }) {
   // how to use the hook
   const { values, handleChange, resetForm, errors } = useFormWithValidation();
 
@@ -16,7 +16,7 @@ function LoginModal({ handleModalClose, onLogin, isOpen, buttonText }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(values.email, values.password);
+    handleLogin(values.email, values.password);
   };
 
   return (

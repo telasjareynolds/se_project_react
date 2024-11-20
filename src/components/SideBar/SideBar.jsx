@@ -1,7 +1,7 @@
 import "./SideBar.css";
 import avatar from "../../assets/avatar.png";
 
-function SideBar() {
+function SideBar({userData}) {
   return (
     <div className="sidebar__content">
       <img src={avatar} alt="Profile avatar" className="sidebar__avatar" />
