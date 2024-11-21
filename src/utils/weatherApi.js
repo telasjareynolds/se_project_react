@@ -1,5 +1,4 @@
 import {
-  defaultClothingItems,
   apiKey,
   location,
   getWeatherType,

@@ -36,7 +36,6 @@ function App() {
     name: "",
     email: "",
     avatar: "",
-    _id: "",
   });
 
   //check is there's a token in localStorage
@@ -100,10 +99,11 @@ function App() {
         console.log("User registered successfully:", data);
         setToken(data.token);
         setIsLoggedIn(true);
-        setCurrentUser(true);
+        setCurrentUser(data.user);
         closeActivemodal();
       })
       .catch((error) => {
+        
         console.error("Error registering user:", error);
       });
   };

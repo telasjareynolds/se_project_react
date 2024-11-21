@@ -1,7 +1,6 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./LoginModal.css";
 import React from "react";
-import { useEffect } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function LoginModal({
@@ -39,6 +38,7 @@ function LoginModal({
           onChange={handleChange}
           value={values.email}
           minLength={2}
+          required
         />
         {errors.email && <span className="modal__error">{errors.email}</span>}
       </label>
@@ -52,6 +52,7 @@ function LoginModal({
           placeholder="Password"
           onChange={handleChange}
           value={values.password}
+          required
         />
         {errors.password && (
           <span className="modal__error">{errors.password}</span>

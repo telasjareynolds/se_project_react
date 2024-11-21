@@ -1,7 +1,6 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./RegisterModal.css";
 import React from "react";
-import { useEffect } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function RegisterModal({
