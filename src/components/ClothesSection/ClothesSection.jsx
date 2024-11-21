@@ -6,6 +6,8 @@ function ClothesSection({
   openAddGarmentModal,
   clothingItems,
 }) {
+
+  const isOwn = selectedCard.owner === currentUser._id;
   return (
     <div className="clothes__section">
       <div className="clothes__section-text">
@@ -20,6 +22,7 @@ function ClothesSection({
       </div>
       <ul className="clothes__section-list">
         {clothingItems.map((item) => {
+
           return (
             <ItemCard
               key={item._id}

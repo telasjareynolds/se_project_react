@@ -6,6 +6,7 @@ export function register(name, avatar, email, password) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+  
     },
     body: JSON.stringify({
       name,
@@ -18,7 +19,7 @@ export function register(name, avatar, email, password) {
 
 // for user authorizaiton
 export function login(email, password) {
-  return request(`${baseUrl}/signup`, {
+  return request(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -37,6 +38,6 @@ export function checkToken(token) {
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
-    }
+    },
   }).then(checkResponse);
 }

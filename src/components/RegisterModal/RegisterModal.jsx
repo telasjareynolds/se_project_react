@@ -4,19 +4,24 @@ import React from "react";
 import { useEffect } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
-function RegisterModal({ handleModalClose, handleRegistration, isOpen, buttonText }) {
+function RegisterModal({
+  handleModalClose,
+  handleRegistration,
+  isOpen,
+  buttonText,
+  openSignInModal,
+}) {
   // how to use the hook
   const { values, handleChange, resetForm, errors } = useFormWithValidation();
 
-  useEffect(() => {
-    if (isOpen) {
-      resetForm();
-    }
-  }, [isOpen, resetForm]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegistration(values.email, values.password, values.avatarUrl);
+    handleRegistration(
+      values.name,
+      values.avatarUrl,
+      values.email,
+      values.password
+    );
   };
 
   return (
@@ -86,6 +91,13 @@ function RegisterModal({ handleModalClose, handleRegistration, isOpen, buttonTex
           <span className="modal__error">{errors.avatarUrl}</span>
         )}
       </label>
+      <button
+        type="button"
+        className="modal__btn-login"
+        onClick={openSignInModal}
+      >
+        or Log In
+      </button>
     </ModalWithForm>
   );
 }

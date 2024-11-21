@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer.jsx";
 import ItemModal from "../ItemModal/ItemModal.jsx";
 import MobileMenu from "../MobileMenu/MobileMenu.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
@@ -31,26 +32,30 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({ username: "", email: "" });
-
+  const [currentUser, setCurrentUser] = useState({
+    name: "",
+    email: "",
+    avatar: "",
+    _id: "",
+  });
 
   //check is there's a token in localStorage
-useEffect(() => {
-  const jwt = getToken();
-  if (!jwt) {
-    return
-  }
-  checkToken(jwt)
-  .then((data) => {
-    console.log("Token is valid:", data);
-    setIsLoggedIn(true);
-    setUserData(data);
-  })
-  .catch((error) => {
-    console.error("Invalid token:", error);
-    removeToken();
-  })
-}, []);
+  useEffect(() => {
+    const jwt = getToken();
+    if (!jwt) {
+      return;
+    }
+    checkToken(jwt)
+      .then((data) => {
+        console.log("Token is valid:", data);
+        setIsLoggedIn(true);
+        setCurrentUser(data);
+      })
+      .catch((error) => {
+        console.error("Invalid token:", error);
+        removeToken();
+      });
+  }, []);
 
   //get filtered cards based on weather
   useEffect(() => {
@@ -88,10 +93,14 @@ useEffect(() => {
   }, [modalActive]);
 
   //Configure user registration
-  const handleRegistration = ({ name, avatar, email, password }) => {
+  const handleRegistration = (name, avatar, email, password) => {
+    console.log(name, avatar, email, password);
     register(name, avatar, email, password)
-      .then(() => {
+      .then((data) => {
+        console.log("User registered successfully:", data);
+        setToken(data.token);
         setIsLoggedIn(true);
+        setCurrentUser(true);
         closeActivemodal();
       })
       .catch((error) => {
@@ -106,15 +115,16 @@ useEffect(() => {
     }
     login(email, password)
       .then((data) => {
-        if (data.jwt) {
+        checkToken(data.token);
+        if (data.token && data.user) {
           console.log(data);
-          setIsLoggedIn(true);
 
           //store token in storage
-          setToken(data.jwt);
+          setToken(data.token);
+          setIsLoggedIn(true);
+          setCurrentUser(userData);
 
           //Update application state
-          setUserData(data.user);
           closeActivemodal();
         } else {
           console.error("No JWT token found in the response.");
@@ -122,6 +132,7 @@ useEffect(() => {
       })
       .catch((error) => {
         console.error("Error logging user in:", error);
+        removeToken();
       });
   };
 
@@ -132,6 +143,14 @@ useEffect(() => {
   const openPreviewImageModal = (card) => {
     setModalActive("preview");
     setSelectedCard(card);
+  };
+  const openSignUpModal = (e) => {
+    e.preventDefault();
+    setModalActive("register");
+  };
+  const openSignInModal = (e) => {
+    e.preventDefault();
+    setModalActive("login");
   };
   const closeActivemodal = () => {
     setModalActive("");
@@ -150,6 +169,7 @@ useEffect(() => {
   // add clothing items
   function onAddItem(name, imageUrl, weather) {
     setIsLoading(true);
+
     addItem({ name, imageUrl, weather })
       .then((data) => {
         setClothingItems((clothingItems) => [data, ...clothingItems]);
@@ -183,84 +203,93 @@ useEffect(() => {
   }
 
   return (
-    <div className="page">
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-      >
-        <div className="page__content">
-          <Header
-            weatherData={weatherData}
-            openAddGarmentModal={openAddGarmentModal}
-            toggleMobileMenu={toggleMobileMenu}
-          />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  openPreviewImageModal={openPreviewImageModal}
-                  clothingItems={clothingItems}
-                />
-              }
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <CurrentTemperatureUnitContext.Provider
+          value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+        >
+          <div className="page__content">
+            <Header
+              weatherData={weatherData}
+              openAddGarmentModal={openAddGarmentModal}
+              toggleMobileMenu={toggleMobileMenu}
+              openSignInModal={openSignInModal}
+              openSignUpModal={openSignUpModal}
             />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}>
-                  <Profile
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
+                    weatherData={weatherData}
                     openPreviewImageModal={openPreviewImageModal}
-                    openAddGarmentModal={openAddGarmentModal}
                     clothingItems={clothingItems}
-                    userData={userData}
                   />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      openPreviewImageModal={openPreviewImageModal}
+                      openAddGarmentModal={openAddGarmentModal}
+                      clothingItems={clothingItems}
+                      currentUser={currentUser}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
 
-          <Footer />
-        </div>
-        <RegisterModal
-          isOpen={modalActive === "register"}
-          handleModalClose={closeActivemodal}
-          handleRegistration={handleRegistration}
-          buttonText={isLoading ? "Saving..." : "Sign Up"}
-        />
-        <LoginModal
-          isOpen={modalActive === "login"}
-          handleModalClose={closeActivemodal}
-          handleLogin={handleLogin}
-          buttonText={isLoading ? "Saving..." : "Log In"}
-        />
-        <AddItemModal
-          isOpen={modalActive === "add-garment"}
-          handleModalClose={closeActivemodal}
-          onAddItem={onAddItem}
-          buttonText={isLoading ? "Saving..." : "Add garment"}
-        />
-        <ItemModal
-          name="preview"
-          isOpen={modalActive === "preview"}
-          handleModalClose={closeActivemodal}
-          card={selectedCard}
-          openConfirmDeleteModal={openConfirmDeleteModal}
-        />
-        <ConfirmDeleteModal
-          name="delete"
-          isOpen={modalActive === "delete"}
-          handleModalClose={closeActivemodal}
-          card={selectedCard}
-          onDeleteItem={onDeleteItem}
-          buttonText={isLoading ? "Saving..." : "Yes, delete item"}
-        />
-        <MobileMenu
-          isMenuOpen={isMenuOpen}
-          closeMobileMenu={toggleMobileMenu}
-          openAddGarmentModal={openAddGarmentModal}
-        />
-      </CurrentTemperatureUnitContext.Provider>
-    </div>
+            <Footer />
+          </div>
+
+          <RegisterModal
+            isOpen={modalActive === "register"}
+            handleModalClose={closeActivemodal}
+            handleRegistration={handleRegistration}
+            buttonText={isLoading ? "Saving..." : "Sign Up"}
+            openSignInModal={openSignInModal}
+          />
+
+          <LoginModal
+            isOpen={modalActive === "login"}
+            handleModalClose={closeActivemodal}
+            handleLogin={handleLogin}
+            buttonText={isLoading ? "Saving..." : "Log In"}
+            openSignUpModal={openSignUpModal}
+          />
+
+          <AddItemModal
+            isOpen={modalActive === "add-garment"}
+            handleModalClose={closeActivemodal}
+            onAddItem={onAddItem}
+            buttonText={isLoading ? "Saving..." : "Add garment"}
+          />
+          <ItemModal
+            name="preview"
+            isOpen={modalActive === "preview"}
+            handleModalClose={closeActivemodal}
+            selectedCard={selectedCard}
+            openConfirmDeleteModal={openConfirmDeleteModal}
+          />
+          <ConfirmDeleteModal
+            name="delete"
+            isOpen={modalActive === "delete"}
+            handleModalClose={closeActivemodal}
+            card={selectedCard}
+            onDeleteItem={onDeleteItem}
+            buttonText={isLoading ? "Saving..." : "Yes, delete item"}
+          />
+          <MobileMenu
+            isMenuOpen={isMenuOpen}
+            closeMobileMenu={toggleMobileMenu}
+            openAddGarmentModal={openAddGarmentModal}
+          />
+        </CurrentTemperatureUnitContext.Provider>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

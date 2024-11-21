@@ -4,15 +4,15 @@ import React from "react";
 import { useEffect } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
-function LoginModal({ handleModalClose, handleLogin, isOpen, buttonText }) {
+function LoginModal({
+  handleModalClose,
+  handleLogin,
+  isOpen,
+  buttonText,
+  openSignUpModal,
+}) {
   // how to use the hook
-  const { values, handleChange, resetForm, errors } = useFormWithValidation();
-
-  useEffect(() => {
-    if (isOpen) {
-      resetForm();
-    }
-  }, [isOpen, resetForm]);
+  const { values, handleChange, errors } = useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,6 +57,13 @@ function LoginModal({ handleModalClose, handleLogin, isOpen, buttonText }) {
           <span className="modal__error">{errors.password}</span>
         )}
       </label>
+      <button
+        type="button"
+        className="modal__btn-signup"
+        onClick={openSignUpModal}
+      >
+        or Sign Up
+      </button>
     </ModalWithForm>
   );
 }

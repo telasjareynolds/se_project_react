@@ -1,14 +1,13 @@
-const TOKEN_KEY = "jwt";
+const JWT_SECRET = "jwt";
 
 // with localStorage the key TOKEN_KEY.
-export const setToken = (token) =>
-  localStorage.setItem(TOKEN_KEY, token);
+export const setToken = (token) => localStorage.setItem(JWT_SECRET, token);
 
 // getToken retrieves and returns the value associated with TOKEN_KEY from localStorage.
 export const getToken = () => {
-  return localStorage.getItem(TOKEN_KEY);
+  return localStorage.getItem(JWT_SECRET);
 };
 
 export const removeToken = () => {
-  return localStorage.removeItem(TOKEN_KEY);
-}
+  return localStorage.removeItem(JWT_SECRET);
+};

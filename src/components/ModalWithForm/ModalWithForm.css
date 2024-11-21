@@ -28,8 +28,8 @@
   position: relative;
   background-color: #fff;
   color: #000;
-  width: 496px;
-  height: 436px;
+  width: 440px; 
+  margin: 28px 0 34px 0;
   padding: 28px 28px 36px;
   border: 1px solid #0000004d;
   border-radius: 20px;
@@ -60,11 +60,10 @@
 }
 
 .modal__submit-btn {
-  margin: 32px 0 0;
+  margin: 16px 0 0;
   background: #0000004d;
   border: none;
   padding: 8px 16px;
   gap: 8px;
   width: fit-content;
 }
-

@@ -1,12 +1,23 @@
 import "./ItemModal.css";
+import React from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
-function ItemModal({
+export default function ItemModal({
   isOpen,
-  card,
+  selectedCard,
   handleModalClose,
   name,
   openConfirmDeleteModal,
 }) {
+  const currentUser = React.useContext(CurrentUserContext);
+
+  // check item owner is current user
+  const isOwn = selectedCard.owner === currentUser._id;
+
+  const itemDeleteButtonClassName = `modal__delete-btn ${
+    isOwn ? "modal__delete-btn_visible" : "modal__delete-btn_hidden"
+  }`;
+
   function handleOverlayClick(e) {
     if (e.target.classList.contains("modal_opened")) {
       handleModalClose();
@@ -26,17 +37,17 @@ function ItemModal({
         ></button>
         <img
           className="modal__preview-img"
-          alt={card.name}
-          src={card.imageUrl}
+          alt={selectedCard.name}
+          src={selectedCard.imageUrl}
         />
         <div className="modal__text-container">
           <div>
-            <h2 className="modal__caption">{card.name}</h2>
-            <p className="modal__weather">Weather: {card.weather}</p>
+            <h2 className="modal__caption">{selectedCard.name}</h2>
+            <p className="modal__weather">Weather: {selectedCard.weather}</p>
           </div>
           <button
             type="button"
-            className="modal__delete-btn"
+            className={itemDeleteButtonClassName}
             onClick={openConfirmDeleteModal}
           >
             Delete item
@@ -46,5 +57,3 @@ function ItemModal({
     </div>
   );
 }
-
-export default ItemModal;

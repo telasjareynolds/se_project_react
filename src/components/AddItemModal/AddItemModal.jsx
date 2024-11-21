@@ -8,15 +8,16 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
   // how to use the hook
   const { values, handleChange, resetForm, errors } = useFormWithValidation();
 
-  useEffect(() => {
-    if (isOpen) {
-      resetForm();
-    }
-  }, [isOpen, resetForm]);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     resetForm();
+  //   }
+  // }, [isOpen, resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddItem(values.name, values.imageUrl, values.weather);
+    resetForm();
   };
 
   return (
