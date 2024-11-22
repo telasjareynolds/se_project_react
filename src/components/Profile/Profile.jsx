@@ -7,6 +7,7 @@ function Profile({
   openAddGarmentModal,
   clothingItems,
   currentUser,
+  selectedCard
 }) {
   return (
     <div className="profile">
@@ -19,6 +20,7 @@ function Profile({
           openPreviewImageModal={openPreviewImageModal}
           openAddGarmentModal={openAddGarmentModal}
           clothingItems={clothingItems}
+          selectedCard={selectedCard}
         />
       </section>
     </div>

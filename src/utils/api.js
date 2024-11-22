@@ -3,8 +3,7 @@ export const baseUrl = "http://localhost:3001";
 export function checkResponse(res) {
   if (res.ok) {
     return res.json();
-  }
-  return Promise.reject(`Error: ${res.status}`);
+  } else return Promise.reject(`Error: ${res.status}`);
 }
 
 export function request(url, options) {

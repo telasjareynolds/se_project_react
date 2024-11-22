@@ -34,7 +34,7 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
         <input
           name="name"
           className="modal__input"
-          id="name"
+          id="item-name"
           type="text"
           placeholder="Name"
           onChange={handleChange}

@@ -1,12 +1,15 @@
 import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard.jsx";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
+import React from "react";
 
 function ClothesSection({
   openPreviewImageModal,
   openAddGarmentModal,
   clothingItems,
+  selectedCard,
 }) {
-
+  const currentUser = React.useContext(CurrentUserContext);
   const isOwn = selectedCard.owner === currentUser._id;
   return (
     <div className="clothes__section">
@@ -22,7 +25,6 @@ function ClothesSection({
       </div>
       <ul className="clothes__section-list">
         {clothingItems.map((item) => {
-
           return (
             <ItemCard
               key={item._id}

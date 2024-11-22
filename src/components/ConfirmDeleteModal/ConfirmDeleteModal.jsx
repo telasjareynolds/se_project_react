@@ -3,7 +3,7 @@ import "./ConfirmDeleteModal.css";
 function ConfirmDeleteModal({
   isOpen,
   onDeleteItem,
-  card,
+  selectedCard,
   handleModalClose,
   name,
   buttonText,
@@ -14,7 +14,7 @@ function ConfirmDeleteModal({
     }
   }
   function handleDelete() {
-    onDeleteItem(card._id);
+    onDeleteItem(selectedCard._id);
   }
   return (
     <div

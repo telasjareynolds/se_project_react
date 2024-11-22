@@ -5,8 +5,8 @@ export function register(name, avatar, email, password) {
   return request(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
-  
     },
     body: JSON.stringify({
       name,
@@ -14,7 +14,7 @@ export function register(name, avatar, email, password) {
       email,
       password,
     }),
-  }).then(checkResponse);
+  });
 }
 
 // for user authorizaiton
@@ -28,7 +28,7 @@ export function login(email, password) {
       email,
       password,
     }),
-  }).then(checkResponse);
+  });
 }
 
 // Check for user token
@@ -39,5 +39,5 @@ export function checkToken(token) {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-  }).then(checkResponse);
+  });
 }

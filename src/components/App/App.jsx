@@ -42,11 +42,12 @@ function App() {
   useEffect(() => {
     const jwt = getToken();
     if (!jwt) {
+      console.log("No token found in localStorage");
       return;
     }
+
     checkToken(jwt)
       .then((data) => {
-        console.log("Token is valid:", data);
         setIsLoggedIn(true);
         setCurrentUser(data);
       })
@@ -93,46 +94,39 @@ function App() {
 
   //Configure user registration
   const handleRegistration = (name, avatar, email, password) => {
-    console.log(name, avatar, email, password);
     register(name, avatar, email, password)
       .then((data) => {
         console.log("User registered successfully:", data);
-        setToken(data.token);
-        setIsLoggedIn(true);
-        setCurrentUser(data.user);
+        handleLogin(email, password);
         closeActivemodal();
       })
       .catch((error) => {
-        
         console.error("Error registering user:", error);
       });
   };
 
   // Configure user authorization
-  const handleLogin = ({ email, password }) => {
+  const handleLogin = (email, password) => {
     if (!email || !password) {
       return;
     }
+
     login(email, password)
       .then((data) => {
-        checkToken(data.token);
         if (data.token && data.user) {
-          console.log(data);
-
           //store token in storage
           setToken(data.token);
           setIsLoggedIn(true);
-          setCurrentUser(userData);
+          setCurrentUser(data.user);
 
           //Update application state
-          closeActivemodal();
         } else {
           console.error("No JWT token found in the response.");
         }
+        closeActivemodal();
       })
       .catch((error) => {
         console.error("Error logging user in:", error);
-        removeToken();
       });
   };
 
@@ -236,6 +230,7 @@ function App() {
                       openAddGarmentModal={openAddGarmentModal}
                       clothingItems={clothingItems}
                       currentUser={currentUser}
+                      selectedCard={selectedCard}
                     />
                   </ProtectedRoute>
                 }
@@ -278,7 +273,7 @@ function App() {
             name="delete"
             isOpen={modalActive === "delete"}
             handleModalClose={closeActivemodal}
-            card={selectedCard}
+            SelectedCard={selectedCard}
             onDeleteItem={onDeleteItem}
             buttonText={isLoading ? "Saving..." : "Yes, delete item"}
           />
