@@ -7,10 +7,12 @@ function ClothesSection({
   openPreviewImageModal,
   openAddGarmentModal,
   clothingItems,
-  selectedCard,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const isOwn = selectedCard.owner === currentUser._id;
+  const userClothingItems = clothingItems.filter(
+    (item) => item.owner === currentUser._id
+  );
+
   return (
     <div className="clothes__section">
       <div className="clothes__section-text">
@@ -24,7 +26,7 @@ function ClothesSection({
         </button>
       </div>
       <ul className="clothes__section-list">
-        {clothingItems.map((item) => {
+        {userClothingItems.map((item) => {
           return (
             <ItemCard
               key={item._id}

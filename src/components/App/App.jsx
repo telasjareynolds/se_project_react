@@ -11,7 +11,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
-import { getItems, addItem, deleteItem } from "../../utils/api.js";
+import * as api from "../../utils/api.js";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal.jsx";
 import ProtectedRoute from "../ProtectedRoute.jsx";
 import { register, login, checkToken } from "../../utils/auth.js";
@@ -68,7 +68,7 @@ function App() {
 
   //get cards from api
   useEffect(() => {
-    getItems()
+    api.getItems()
       .then((data) => {
         setClothingItems(data);
       })
@@ -130,14 +130,64 @@ function App() {
       });
   };
 
+  
+  //switch tempature units
+  const handleToggleSwitchChange = () => {
+    currentTemperatureUnit === "F"
+    ? setCurrentTemperatureUnit("C")
+    : setCurrentTemperatureUnit("F");
+  };
+  // add clothing items
+  function onAddItem(name, imageUrl, weather) {
+    const token = getToken();
+    if (!token) {
+      console.error("User not authorized to add items.");
+      return;
+    }
+    setIsLoading(true);
+    
+    api.addItem({ name, imageUrl, weather }, token)
+    .then((data) => {
+      setClothingItems((clothingItems) => [data, ...clothingItems]);
+      closeActivemodal();
+    })
+    .catch((error) => {
+      console.error("Error adding item:", error);
+    })
+    .finally(() => setIsLoading(false));
+  }
+
+  const handleCardLike= ({ id, isLiked }) => {
+    const token = getToken();
+
+    if (!isLiked) {
+    api.addCardLike(id, token)
+    .then((updatedCard) => {
+      setClothingItems((cards) => 
+      cards.map((item) => (item._id === id ? updatedCard : item))
+      );
+    })
+    .catch((err) => console.log(err))
+  } else {
+    api.removeCardLike(id, token)
+    .then((updatedCard) => {
+      setClothingItems((cards) => cards.map((item) => (item._id === id ? updatedCard : item)
+    ))
+    })
+    .catch((err) => console.log(err));
+  }
+  };
+  
   //Open and close modals
   const openAddGarmentModal = () => {
     setModalActive("add-garment");
   };
+
   const openPreviewImageModal = (card) => {
     setModalActive("preview");
     setSelectedCard(card);
   };
+
   const openSignUpModal = (e) => {
     e.preventDefault();
     setModalActive("register");
@@ -153,28 +203,6 @@ function App() {
   const toggleMobileMenu = () => {
     isMenuOpen === false ? setIsMenuOpen(true) : setIsMenuOpen(false);
   };
-
-  //switch tempature units
-  const handleToggleSwitchChange = () => {
-    currentTemperatureUnit === "F"
-      ? setCurrentTemperatureUnit("C")
-      : setCurrentTemperatureUnit("F");
-  };
-  // add clothing items
-  function onAddItem(name, imageUrl, weather) {
-    setIsLoading(true);
-
-    addItem({ name, imageUrl, weather })
-      .then((data) => {
-        setClothingItems((clothingItems) => [data, ...clothingItems]);
-        closeActivemodal();
-      })
-      .catch((error) => {
-        console.error("Error adding item:", error);
-      })
-      .finally(() => setIsLoading(false));
-  }
-
   //open confirm delete item modal
 
   const openConfirmDeleteModal = () => {
@@ -183,7 +211,7 @@ function App() {
 
   function onDeleteItem(id) {
     console.log("Deleting item with ID:", id);
-    deleteItem(id)
+    api.deleteItem(id)
       .then(() => {
         const updatedClothingItems = clothingItems.filter(
           (item) => item._id !== id
@@ -218,6 +246,7 @@ function App() {
                     weatherData={weatherData}
                     openPreviewImageModal={openPreviewImageModal}
                     clothingItems={clothingItems}
+                    onCardLike={handleCardLike}
                   />
                 }
               />

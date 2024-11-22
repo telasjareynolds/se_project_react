@@ -4,7 +4,7 @@ import ItemCard from "../ItemCard/ItemCard.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
 import React from "react";
 
-function Main({ weatherData, openPreviewImageModal, clothingItems }) {
+function Main({ weatherData, openPreviewImageModal, clothingItems, onCardLike }) {
   //hot, warm, or cold
   const { currentTemperatureUnit } = React.useContext(
     CurrentTemperatureUnitContext
@@ -31,6 +31,7 @@ function Main({ weatherData, openPreviewImageModal, clothingItems }) {
                   key={item._id}
                   item={item}
                   openPreviewImageModal={openPreviewImageModal}
+                  onCardLike={onCardLike}
                 />
               );
             })}
