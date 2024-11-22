@@ -48,7 +48,6 @@ function App() {
   //check is there's a token in localStorage
   useEffect(() => {
     const jwt = getToken();
-    console.log(jwt);
     if (!jwt) {
       console.log("No token found in localStorage");
       return;
@@ -56,10 +55,8 @@ function App() {
 
     checkToken(jwt)
       .then((data) => {
-        console.log(".then ran");
         setIsLoggedIn(true);
         setCurrentUser(data.user);
-        console.log(data);
       })
       .catch((error) => {
         console.error("Invalid token:", error);
@@ -107,7 +104,6 @@ function App() {
   const handleRegistration = (name, avatar, email, password) => {
     register(name, avatar, email, password)
       .then((data) => {
-        console.log("User registered successfully:", data);
         handleLogin(email, password);
         closeActivemodal();
       })
@@ -208,14 +204,11 @@ function App() {
       api
         .addCardLike(id, token)
         .then((updatedCard) => {
-          console.log(updatedCard);
-          console.log(clothingItems);
-          console.log(id);
           setClothingItems((cards) =>
             cards.map((item) => (item._id === id ? updatedCard : item))
           );
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     } else {
       api
         .removeCardLike(id, token)
@@ -224,7 +217,7 @@ function App() {
             cards.map((item) => (item._id === id ? updatedCard : item))
           );
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     }
   };
 
@@ -265,7 +258,6 @@ function App() {
   };
 
   function onDeleteItem(id) {
-    console.log("Deleting item with ID:", id);
     api
       .deleteItem(id)
       .then(() => {

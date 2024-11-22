@@ -7,8 +7,6 @@ import { useContext } from "react";
 function ItemCard({ item, openPreviewImageModal, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
   const isLiked = item.likes.some((id) => id === currentUser._id);
-  console.log(item.likes);
-  console.log(currentUser);
 
   const itemLikeButtonClassName =
     currentUser === "" ? "card__like-visible" : "card__like-hidden";
