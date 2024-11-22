@@ -7,13 +7,14 @@ function Profile({
   openAddGarmentModal,
   clothingItems,
   currentUser,
-  selectedCard
+  selectedCard,
+  openEditProfileModal,
+  handleLogOut
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        {console.log(clothingItems)}
-        <SideBar currentUser={currentUser} />
+        <SideBar currentUser={currentUser} openEditProfileModal={openEditProfileModal} handleLogOut={handleLogOut}/>
       </section>
       <section className="profile__clothes-section">
         <ClothesSection

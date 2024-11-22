@@ -76,7 +76,7 @@ function RegisterModal({
         {errors.name && <span className="modal__error">{errors.name}</span>}
       </label>
       <label htmlFor="avatarUrl" className="modal__label">
-        Avatar URL *{" "}
+        Avatar URL{" "}
         <input
           className="modal__input"
           name="avatarUrl"

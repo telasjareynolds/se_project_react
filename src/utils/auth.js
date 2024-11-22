@@ -41,3 +41,18 @@ export function checkToken(token) {
     },
   });
 }
+
+export function editProfileData(name, avatar) {
+  return request(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+    body: JSON.stringify({
+      name,
+      avatar,
+    }),
+  });
+}

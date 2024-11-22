@@ -36,15 +36,18 @@
   position: absolute;
 }
 
-.modal__delete-btn_visible {
+.modal__delete-btn {
   border: none;
   background-color: #ffffff;
   font-weight: 700;
   color: #ff4d00;
   padding-right: 32px;
-  visibility: visible;
+}
+
+.modal__delete-btn_visible {
+  display: block;
 }
 
 .modal__delete-btn_hidden {
-  visibility: hidden;
+  display: hidden;
 }
