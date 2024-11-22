@@ -42,13 +42,12 @@ export function checkToken(token) {
   });
 }
 
-export function editProfileData(name, avatar) {
+export function editProfileData(name, avatar, token) {
   return request(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       name,

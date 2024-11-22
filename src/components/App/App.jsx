@@ -42,11 +42,13 @@ function App() {
     name: "",
     email: "",
     avatar: "",
+    _id: "",
   });
 
   //check is there's a token in localStorage
   useEffect(() => {
     const jwt = getToken();
+    console.log(jwt);
     if (!jwt) {
       console.log("No token found in localStorage");
       return;
@@ -54,8 +56,10 @@ function App() {
 
     checkToken(jwt)
       .then((data) => {
+        console.log(".then ran");
         setIsLoggedIn(true);
-        setCurrentUser(data);
+        setCurrentUser(data.user);
+        console.log(data);
       })
       .catch((error) => {
         console.error("Invalid token:", error);
@@ -138,17 +142,20 @@ function App() {
   };
 
   const handleEditProfile = (name, avatar) => {
+    const token = getToken();
+
     if (!currentUser) {
       console.error("User not authorized to modify profile");
       return;
     }
 
     setIsLoading(true);
-    editProfileData(name, avatar)
+    editProfileData(name, avatar, token)
       .then((userData) => {
+        const user = userData.user;
         setCurrentUser({
-          name: userData.name,
-          avatar: userData.avatar,
+          name: user.name,
+          avatar: user.avatar,
         });
         closeActivemodal();
       })
@@ -156,17 +163,16 @@ function App() {
   };
 
   const handleLogOut = () => {
-      if (isLoggedIn) {
-        removeToken();
-        setIsLoggedIn(false);
-        setCurrentUser({});
+    if (isLoggedIn) {
+      removeToken();
+      setIsLoggedIn(false);
+      setCurrentUser({});
 
-        closeActivemodal();
-      
-      } else {
-        console.error("Cannot be logged out.");
-      }
-  }
+      closeActivemodal();
+    } else {
+      console.error("Cannot be logged out.");
+    }
+  };
 
   //switch tempature units
   const handleToggleSwitchChange = () => {
@@ -202,6 +208,9 @@ function App() {
       api
         .addCardLike(id, token)
         .then((updatedCard) => {
+          console.log(updatedCard);
+          console.log(clothingItems);
+          console.log(id);
           setClothingItems((cards) =>
             cards.map((item) => (item._id === id ? updatedCard : item))
           );

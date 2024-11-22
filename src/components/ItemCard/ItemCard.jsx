@@ -6,9 +6,12 @@ import { useContext } from "react";
 
 function ItemCard({ item, openPreviewImageModal, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
-  const isLiked = item.likes.some(id => id === currentUser._id);
+  const isLiked = item.likes.some((id) => id === currentUser._id);
+  console.log(item.likes);
+  console.log(currentUser);
 
-  const itemLikeButtonClassName = !currentUser._id ? 'card__like-hidden' : 'card__like-visible';
+  const itemLikeButtonClassName =
+    currentUser === "" ? "card__like-visible" : "card__like-hidden";
 
   const openPreviewClick = () => {
     openPreviewImageModal(item);
@@ -16,7 +19,6 @@ function ItemCard({ item, openPreviewImageModal, onCardLike }) {
 
   const handleLike = () => {
     onCardLike({ id: item._id, isLiked });
-    
   };
 
   return (

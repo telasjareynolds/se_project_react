@@ -14,7 +14,8 @@ function Header({
   openSignUpModal,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-
+  
+  console.log(currentUser, currentUser.name);
   const isLoggedIn = currentUser && currentUser.name;
 
   const getInitial = (name) => {

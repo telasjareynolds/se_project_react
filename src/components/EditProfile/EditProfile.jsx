@@ -50,7 +50,6 @@ function EditModal({
           placeholder="Avatar URL"
           onChange={handleChange}
           value={values.avatarUrl}
-          required
         />
         {errors.avatarUrl && (
           <span className="modal__error">{errors.avatarUrl}</span>

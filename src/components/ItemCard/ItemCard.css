@@ -34,12 +34,12 @@
   display: none;
 }
 
-.card__like-visible{
+.card__like-visible {
   display: block;
 }
 
-.card__like-visible:hover{
-   opacity: 30%;
+.card__like-visible:hover {
+  opacity: 30%;
 }
 
 @media screen and (max-width: 550px) {
@@ -47,6 +47,4 @@
     width: 164px;
     height: 164px;
   }
-
-  
 }
