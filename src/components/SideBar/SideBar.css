@@ -11,13 +11,15 @@
 .sidebar__avatar {
   width: 56px;
   height: 56px;
-  padding-right: 16px;
+
+  border-radius: 50%;
 }
 
 .sidebar__username {
   font-size: 20px;
   line-height: 24.8px;
   text-wrap: nowrap;
+  padding-left: 16px;
 }
 
 .sidebar__placeholder {

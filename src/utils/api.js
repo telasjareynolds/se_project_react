@@ -34,6 +34,7 @@ export function deleteItem(id, token) {
     method: "DELETE",
     headers: {
       authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
   });
 }

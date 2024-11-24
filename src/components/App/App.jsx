@@ -258,8 +258,14 @@ function App() {
   };
 
   function onDeleteItem(id) {
+    const token = getToken();
+
+    if (!token) {
+      console.error("User not authorized to delete item");
+      return;
+    }
     api
-      .deleteItem(id)
+      .deleteItem(id, token)
       .then(() => {
         const updatedClothingItems = clothingItems.filter(
           (item) => item._id !== id
@@ -358,7 +364,7 @@ function App() {
             name="delete"
             isOpen={modalActive === "delete"}
             handleModalClose={closeActivemodal}
-            SelectedCard={selectedCard}
+            selectedCard={selectedCard}
             onDeleteItem={onDeleteItem}
             buttonText={isLoading ? "Saving..." : "Yes, delete item"}
           />
