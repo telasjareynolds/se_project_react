@@ -16,8 +16,6 @@ function ConfirmDeleteModal({
   function handleDelete() {
     onDeleteItem(selectedCard._id);
   }
-
-  console.log(selectedCard._id);
   
   return (
     <div

@@ -8,8 +8,11 @@ function ItemCard({ item, openPreviewImageModal, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
   const isLiked = item.likes.some((id) => id === currentUser._id);
 
+  console.log(currentUser);
+  console.log(item.owner);
+
   const itemLikeButtonClassName =
-    currentUser === "" ? "card__like-hidden" : "card__like-visible";
+    currentUser._id === "" ? "card__like-hidden" : "card__like-visible";
 
   const openPreviewClick = () => {
     openPreviewImageModal(item);
