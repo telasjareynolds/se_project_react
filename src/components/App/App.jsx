@@ -103,7 +103,7 @@ function App() {
   //Configure user registration
   const handleRegistration = (name, avatar, email, password) => {
     register(name, avatar, email, password)
-      .then((data) => {
+      .then(() => {
         handleLogin(email, password);
         closeActivemodal();
       })
@@ -204,6 +204,8 @@ function App() {
       api
         .addCardLike(id, token)
         .then((updatedCard) => {
+          console.log(clothingItems);
+          console.log(id);
           setClothingItems((cards) =>
             cards.map((item) => (item._id === id ? updatedCard : item))
           );
