@@ -2,6 +2,7 @@ import "./Profile.css";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 
+
 function Profile({
   openPreviewImageModal,
   openAddGarmentModal,
@@ -9,8 +10,11 @@ function Profile({
   currentUser,
   selectedCard,
   openEditProfileModal,
-  handleLogOut
+  handleLogOut,
+  onCardLike
 }) {
+
+
   return (
     <div className="profile">
       <section className="profile__sidebar">
@@ -22,6 +26,7 @@ function Profile({
           openAddGarmentModal={openAddGarmentModal}
           clothingItems={clothingItems}
           selectedCard={selectedCard}
+          onCardLike={onCardLike}
         />
       </section>
     </div>

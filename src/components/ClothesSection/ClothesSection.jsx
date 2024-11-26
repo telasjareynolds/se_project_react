@@ -7,6 +7,7 @@ function ClothesSection({
   openPreviewImageModal,
   openAddGarmentModal,
   clothingItems,
+  onCardLike,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   const userClothingItems = clothingItems.filter(
@@ -32,6 +33,7 @@ function ClothesSection({
               key={item._id}
               item={item}
               openPreviewImageModal={openPreviewImageModal}
+              onCardLike={onCardLike}
             />
           );
         })}

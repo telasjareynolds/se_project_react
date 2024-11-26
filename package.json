@@ -6,7 +6,7 @@
   "homepage": "https://projectreact.twilightparadox.com",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "npm run build && scp -r ./dist/* telasjareynolds@104.196.159.224:/home/telasjareynolds/frontend",
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",

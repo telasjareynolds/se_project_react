@@ -8,7 +8,7 @@ import ItemModal from "../ItemModal/ItemModal.jsx";
 import MobileMenu from "../MobileMenu/MobileMenu.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import * as api from "../../utils/api.js";
@@ -63,6 +63,7 @@ function App() {
         removeToken();
       });
   }, []);
+
 
   //get filtered cards based on weather
   useEffect(() => {
@@ -316,6 +317,7 @@ function App() {
                       selectedCard={selectedCard}
                       openEditProfileModal={openEditProfileModal}
                       handleLogOut={handleLogOut}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }
