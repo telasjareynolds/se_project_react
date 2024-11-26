@@ -7,6 +7,7 @@ function EditModal({
   handleEditProfile,
   isOpen,
   buttonText,
+  currentUser,
 }) {
   // how to use the hook
   const { values, handleChange, errors } = useFormWithValidation();
@@ -34,7 +35,7 @@ function EditModal({
           type="text"
           placeholder="Name"
           onChange={handleChange}
-          value={values.name}
+          value={values.name || currentUser.name}
           minLength={2}
           required
         />
@@ -49,7 +50,7 @@ function EditModal({
           type="url"
           placeholder="Avatar URL"
           onChange={handleChange}
-          value={values.avatarUrl}
+          value={values.avatarUrl || currentUser.avatar}
         />
         {errors.avatarUrl && (
           <span className="modal__error">{errors.avatarUrl}</span>

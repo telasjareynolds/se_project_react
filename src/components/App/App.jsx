@@ -8,7 +8,7 @@ import ItemModal from "../ItemModal/ItemModal.jsx";
 import MobileMenu from "../MobileMenu/MobileMenu.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile.jsx";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
 import * as api from "../../utils/api.js";
@@ -38,6 +38,7 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedInLoading, setIsLoggedInLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState({
     name: "",
     email: "",
@@ -55,15 +56,16 @@ function App() {
 
     checkToken(jwt)
       .then((data) => {
+        isLoggedInLoading(false);
         setIsLoggedIn(true);
         setCurrentUser(data.user);
       })
       .catch((error) => {
         console.error("Invalid token:", error);
         removeToken();
+        isLoggedInLoading(false);
       });
   }, []);
-
 
   //get filtered cards based on weather
   useEffect(() => {
@@ -361,6 +363,7 @@ function App() {
             handleModalClose={closeActivemodal}
             handleEditProfile={handleEditProfile}
             buttonText={isLoading ? "Saving..." : "Save changes"}
+            currentUser={currentUser}
           />
           <ConfirmDeleteModal
             name="delete"
