@@ -1,14 +1,4 @@
-export const baseUrl = "http://localhost:3001";
-
-export function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
-  } else return Promise.reject(`Error: ${res.status}`);
-}
-
-export function request(url, options) {
-  return fetch(url, options).then(checkResponse);
-}
+import { baseUrl, request } from "./constants";
 
 export function getItems() {
   return request(`${baseUrl}/items`);

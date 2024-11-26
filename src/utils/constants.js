@@ -4,6 +4,21 @@ export const location = {
   longitude: "-83.541939",
 };
 
+export const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.projectreact.twilightparadox.com"
+    : "http://localhost:3001";
+
+export function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  } else return Promise.reject(`Error: ${res.status}`);
+}
+
+export function request(url, options) {
+  return fetch(url, options).then(checkResponse);
+}
+
 export function getWeatherType(temp) {
   if (temp >= 86) {
     return "hot";

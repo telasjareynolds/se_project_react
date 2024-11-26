@@ -1,14 +1,10 @@
-import {
-  apiKey,
-  location,
-  getWeatherType,
-} from "./constants";
-import { checkResponse } from "./api";
+import { apiKey, location, getWeatherType } from "./constants";
+import { request } from "./constants";
 
 export function weather() {
-  return fetch(
+  return request(
     `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&units=imperial&appid=${apiKey}`
-  ).then(checkResponse)
+  );
 }
 
 export function filterWeatherData(data) {

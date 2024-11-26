@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://telasjareynolds.github.io/se_project_react/",
+  "homepage": "https://projectreact.twilightparadox.com",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",

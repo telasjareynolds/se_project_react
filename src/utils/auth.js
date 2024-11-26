@@ -1,4 +1,4 @@
-import { checkResponse, baseUrl, request } from "./api";
+import { baseUrl, request } from "./constants";
 
 // for user registration
 export function register(name, avatar, email, password) {
