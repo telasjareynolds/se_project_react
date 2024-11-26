@@ -56,14 +56,14 @@ function App() {
 
     checkToken(jwt)
       .then((data) => {
-        isLoggedInLoading(false);
+        setIsLoggedInLoading(false);
         setIsLoggedIn(true);
         setCurrentUser(data.user);
       })
       .catch((error) => {
         console.error("Invalid token:", error);
         removeToken();
-        isLoggedInLoading(false);
+        setIsLoggedInLoading(false);
       });
   }, []);
 
@@ -153,6 +153,8 @@ function App() {
       .then((userData) => {
         const user = userData.user;
         setCurrentUser({
+          _id: currentUser._id,
+          email: currentUser.email,
           name: user.name,
           avatar: user.avatar,
         });
@@ -310,7 +312,10 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    isLoggedInLoading={isLoggedInLoading}
+                  >
                     <Profile
                       openPreviewImageModal={openPreviewImageModal}
                       openAddGarmentModal={openAddGarmentModal}

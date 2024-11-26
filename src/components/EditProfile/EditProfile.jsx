@@ -1,5 +1,5 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function EditModal({
@@ -10,7 +10,16 @@ function EditModal({
   currentUser,
 }) {
   // how to use the hook
-  const { values, handleChange, errors } = useFormWithValidation();
+  const { values, setValues, handleChange, errors } = useFormWithValidation();
+
+  useEffect(() => {
+    if (isOpen) {
+      setValues({
+        name: currentUser.name,
+        avatarUrl: currentUser.avatar,
+      });
+    }
+  }, [isOpen, setValues, currentUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +44,7 @@ function EditModal({
           type="text"
           placeholder="Name"
           onChange={handleChange}
-          value={values.name || currentUser.name}
+          value={values.name}
           minLength={2}
           required
         />
@@ -50,7 +59,7 @@ function EditModal({
           type="url"
           placeholder="Avatar URL"
           onChange={handleChange}
-          value={values.avatarUrl || currentUser.avatar}
+          value={values.avatarUrl}
         />
         {errors.avatarUrl && (
           <span className="modal__error">{errors.avatarUrl}</span>
