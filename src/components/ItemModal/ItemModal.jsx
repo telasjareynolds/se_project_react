@@ -18,8 +18,6 @@ export default function ItemModal({
     isOwn ? "modal__delete-btn_visible" : "modal__delete-btn_hidden"
   }`;
 
-  console.log(currentUser);
-
   function handleOverlayClick(e) {
     if (e.target.classList.contains("modal_opened")) {
       handleModalClose();

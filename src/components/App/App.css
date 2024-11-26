@@ -17,15 +17,17 @@
 
 .modal__label {
   color: #000000;
+  margin-top: 19px;
 }
 
 .modal__input {
   border: none;
   border-bottom: 1px solid #000000;
-  margin: 8px 0 24px;
+  margin: 8px 0 5px;
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 0;
 }
 
 .modal__radio-btns {
@@ -43,12 +45,11 @@
 
 @media screen and (max-width: 550px) {
   .page {
-  padding: 20px 16px;
+    padding: 20px 16px;
   }
 
   .page__content {
     width: 343px;
-    width: 100%;  
-    
+    width: 100%;
   }
 }

@@ -204,8 +204,6 @@ function App() {
       api
         .addCardLike(id, token)
         .then((updatedCard) => {
-          console.log(clothingItems);
-          console.log(id);
           setClothingItems((cards) =>
             cards.map((item) => (item._id === id ? updatedCard : item))
           );

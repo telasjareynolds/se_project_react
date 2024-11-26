@@ -7,7 +7,13 @@
   gap: 8px;
   width: fit-content;
   position: absolute;
-  top: 254px;
+  bottom: 46px;
   left: 116px;
   padding: 0;
+}
+
+@media screen and (max-width: 550px) {
+  .modal__btn-signup {
+    bottom: 48px;
+  }
 }

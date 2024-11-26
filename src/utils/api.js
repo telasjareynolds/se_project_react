@@ -34,13 +34,13 @@ export function deleteItem(id, token) {
     method: "DELETE",
     headers: {
       authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 }
 
 export function addCardLike(id, token) {
-  return request(`${baseUrl}/${id}/likes`, {
+  return request(`${baseUrl}/items/${id}/likes`, {
     method: "PUT",
     headers: {
       authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ export function addCardLike(id, token) {
 }
 
 export function removeCardLike(id, token) {
-  return request(`${baseUrl}/${id}/likes`, {
+  return request(`${baseUrl}/items/${id}/likes`, {
     method: "DELETE",
     headers: {
       authorization: `Bearer ${token}`,

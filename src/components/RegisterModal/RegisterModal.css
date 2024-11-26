@@ -7,6 +7,12 @@
   gap: 8px;
   width: fit-content;
   position: absolute;
-  top: 392px;
+  bottom: 38px;
   left: 116px;
+}
+
+@media screen and (max-width: 550px) {
+.modal__btn-login {
+  bottom: 37px;
+}
 }
