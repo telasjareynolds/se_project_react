@@ -1,5 +1,5 @@
 import { apiKey, location, getWeatherType } from "./constants";
-import { request } from "./constants";
+import { request } from "../utils/constants";
 
 export function weather() {
   return request(

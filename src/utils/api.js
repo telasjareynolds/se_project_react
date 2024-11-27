@@ -1,4 +1,4 @@
-import { baseUrl, request } from "./constants";
+import { baseUrl, request } from "../utils/constants";
 
 export function getItems() {
   return request(`${baseUrl}/items`);

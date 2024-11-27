@@ -1,4 +1,4 @@
-import { baseUrl, request } from "./constants";
+import { baseUrl, request } from "../utils/constants";
 
 // for user registration
 export function register(name, avatar, email, password) {
