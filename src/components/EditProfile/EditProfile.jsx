@@ -1,14 +1,17 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function EditModal({
   handleModalClose,
   handleEditProfile,
   isOpen,
   buttonText,
-  currentUser,
+
 }) {
+const currentUser = useContext(CurrentUserContext);
+
   // how to use the hook
   const { values, setValues, handleChange, errors } = useFormWithValidation();
 
@@ -35,7 +38,7 @@ function EditModal({
       isOpen={isOpen}
       onSubmit={handleSubmit}
     >
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name *{" "}
         <input
           name="name"
@@ -50,7 +53,7 @@ function EditModal({
         />
         {errors.name && <span className="modal__error">{errors.name}</span>}
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label className="modal__label">
         Avatar *{" "}
         <input
           className="modal__input"

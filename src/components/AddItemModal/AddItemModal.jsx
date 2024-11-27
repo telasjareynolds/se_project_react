@@ -8,10 +8,13 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
   // how to use the hook
   const { values, handleChange, resetForm, errors } = useFormWithValidation();
 
+  useEffect(() => {
+    resetForm();
+  }, [isOpen]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddItem(values.name, values.imageUrl, values.weather);
-    resetForm();
   };
 
   return (
@@ -23,7 +26,7 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
       isOpen={isOpen}
       onSubmit={handleSubmit}
     >
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name{" "}
         <input
           name="name"
@@ -37,7 +40,7 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
         />
         {errors.name && <span className="modal__error">{errors.name}</span>}
       </label>
-      <label htmlFor="imageUrl" className="modal__label">
+      <label className="modal__label">
         {" "}
         Image
         <input
@@ -55,7 +58,7 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
       </label>
       <fieldset className="modal__radio-btns">
         <legend className="modal__legend">Select the weather type:</legend>
-        <label htmlFor="hot" className="modal__label modal__label_type_radio">
+        <label className="modal__label modal__label_type_radio">
           <input
             id="hot"
             className="modal__radio-input"
@@ -67,7 +70,7 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
           />
           Hot
         </label>
-        <label htmlFor="warm" className="modal__label modal__label_type_radio">
+        <label className="modal__label modal__label_type_radio">
           <input
             id="warm"
             className="modal__radio-input"
@@ -79,7 +82,7 @@ function AddItemModal({ handleModalClose, onAddItem, isOpen, buttonText }) {
           />
           Warm
         </label>
-        <label htmlFor="cold" className="modal__label modal__label_type_radio">
+        <label className="modal__label modal__label_type_radio">
           <input
             id="cold"
             className="modal__radio-input"

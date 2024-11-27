@@ -83,7 +83,7 @@ function App() {
       .then((data) => {
         setClothingItems(data);
       })
-      .catch(console.error("Error getting items"));
+      .catch(console.error);
   }, []);
 
   //Stop ESC listener if there are no active modals
@@ -127,6 +127,7 @@ function App() {
           //store token in storage
           setToken(data.token);
           setIsLoggedIn(true);
+          console.log(data.user);
           setCurrentUser(data.user);
 
           //Update application state
@@ -320,7 +321,7 @@ function App() {
                       openPreviewImageModal={openPreviewImageModal}
                       openAddGarmentModal={openAddGarmentModal}
                       clothingItems={clothingItems}
-                      currentUser={currentUser}
+                     
                       selectedCard={selectedCard}
                       openEditProfileModal={openEditProfileModal}
                       handleLogOut={handleLogOut}
@@ -368,7 +369,7 @@ function App() {
             handleModalClose={closeActivemodal}
             handleEditProfile={handleEditProfile}
             buttonText={isLoading ? "Saving..." : "Save changes"}
-            currentUser={currentUser}
+          
           />
           <ConfirmDeleteModal
             name="delete"
