@@ -18,5 +18,6 @@ Link to back-end repo: https://github.com/telasjareynolds/se_project_express
 
 ⚙️ Setup
 Clone: git clone: https://github.com/telasjareynolds/se_project_react/
-Install dependencies: npm install
-Start server: npm start (available at http://localhost:3000)
+
+Domain name: https://projectreact.twilightparadox.com	
+	https://www.projectreact.twilightparadox.com
