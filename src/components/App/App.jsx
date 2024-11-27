@@ -129,7 +129,7 @@ function App() {
           setIsLoggedIn(true);
           console.log(data.user);
           setCurrentUser(data.user);
-
+          setIsLoggedInLoading(false);
           //Update application state
         } else {
           console.error("No JWT token found in the response.");
@@ -138,7 +138,8 @@ function App() {
       })
       .catch((error) => {
         console.error("Error logging user in:", error);
-      });
+      })
+      .finally(setIsLoggedInLoading(false));
   };
 
   const handleEditProfile = (name, avatar) => {
@@ -321,7 +322,6 @@ function App() {
                       openPreviewImageModal={openPreviewImageModal}
                       openAddGarmentModal={openAddGarmentModal}
                       clothingItems={clothingItems}
-                     
                       selectedCard={selectedCard}
                       openEditProfileModal={openEditProfileModal}
                       handleLogOut={handleLogOut}
@@ -369,7 +369,6 @@ function App() {
             handleModalClose={closeActivemodal}
             handleEditProfile={handleEditProfile}
             buttonText={isLoading ? "Saving..." : "Save changes"}
-          
           />
           <ConfirmDeleteModal
             name="delete"
