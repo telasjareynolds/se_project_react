@@ -83,7 +83,7 @@ function App() {
       .then((data) => {
         setClothingItems(data);
       })
-      .catch(console.error);
+      .catch(console.error("Error getting items"));
   }, []);
 
   //Stop ESC listener if there are no active modals
